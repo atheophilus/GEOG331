@@ -16,6 +16,9 @@ Mat<-matrix(c(1,2,3,4,5,6),ncol=2, byrow=TRUE)
 
 
 
-datw <- read.csv("Z:\\GEOG331_S22\data\noaa_weather\2011124.csv")
+datw <- read.csv("T:\\GEOG331_S22\data\noaa_weather\2011124.csv")
 
-
+getwd()
+#set working directory to my noaa data folder
+setwd("T:/students/atheophilus/Data/noaa_weather")
+datw <- read.csv("T:/students/atheophilus/Data/noaa_weather/2011124.csv")
