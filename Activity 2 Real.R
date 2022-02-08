@@ -47,14 +47,15 @@ averageTemp
 #convert level to number for factor data type
 #you will have to reference the level output or look at the row of data to see the character designation.
 datW$siteN <- as.numeric(datW$NAME)
+suppressWarnings(as.numeric(datW$NAME))
 #make a histogram for the first site in our levels, Aberdeen
 #main= is the title name argument.
 #Here you want to paste the actual name of the factor not the numeric index
 #since that will be more meaningful. 
 hist(datW$TAVE[datW$siteN == 1],
      freq=FALSE, 
-     main = "Aberdeen, WA",
-     xlab = "Average daily temperature (degrees C)", 
+     main ="ABERDEEN, WA US",
+     xlab ="Average daily temperature (degrees C)", 
      ylab="Relative frequency",
      col="grey50",
      border="white")
