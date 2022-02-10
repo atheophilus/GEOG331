@@ -189,3 +189,29 @@ hist(datW$PRCP[datW$siteN == 1],
      ylab="Relative frequency",
      col="grey50",
      border="white")
+
+#use sum function to get precip for each year and site in the data
+sum(datW$PRCP[datW$siteN == 1], na.rm = TRUE)
+sum(datW$PRCP[datW$siteN == 2], na.rm = TRUE)
+sum(datW$PRCP[datW$siteN == 3], na.rm = TRUE)
+sum(datW$PRCP[datW$siteN == 4], na.rm = TRUE)
+sum(datW$PRCP[datW$siteN == 5], na.rm = TRUE)
+
+#create a function for yearly precip totals
+annualPRCP <- aggregate(datW$PRCP, by=list(datW$siteN, datW$year), FUN="sum",na.rm=TRUE)
+#make a histogram of annual precip in Aberdeen
+hist(annualPRCP$x[annualPRCP$Group.1 == 1],
+     freq=FALSE, 
+     main = "ABERDEEN, WA US",
+     xlab = "Annual precipitation (cm)", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+mean(aPRCP$x[aPRCP$Group.1 == 1], na.rm = TRUE)
+2107.077
+#create mean annual precip data set 
+MaPRCP <- aggregate(aPRCP$x, by=list(aPRCP$Group.1), FUN="mean", na.rm=TRUE)
+
+#end of assignment code
+                      
