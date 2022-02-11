@@ -190,6 +190,7 @@ hist(datW$PRCP[datW$siteN == 1],
      col="grey50",
      border="white")
 
+
 #use sum function to get precip for each year and site in the data
 sum(datW$PRCP[datW$siteN == 1], na.rm = TRUE)
 sum(datW$PRCP[datW$siteN == 2], na.rm = TRUE)
@@ -214,4 +215,4 @@ mean(aPRCP$x[aPRCP$Group.1 == 1], na.rm = TRUE)
 MaPRCP <- aggregate(aPRCP$x, by=list(aPRCP$Group.1), FUN="mean", na.rm=TRUE)
 
 #end of assignment code
-                      
+
