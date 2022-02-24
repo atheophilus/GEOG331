@@ -137,21 +137,53 @@ assert(sum(d) == sum(e), "error: unequal values")
 datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
                           ifelse(datW$precipitation > 5, NA, datW$air.tempQ1))
 
-# question 6 assert function
-f <- c(datW$air.tempQ1)
-g <- c(datW$air.tempQ2)
+# question 6 
+f <- c(datW$wind.speedQ1)
+g <- c(datW$wind.speedQ2)
 assert(sum(f) == sum(g), "error: unequal values")
-# error means that data was properly filtered, numbers replaced with NA
-# question 6 plot
-plot(datW$DD, datW$air.tempQ1, xlab = "Day of Year", ylab = "Air Temp(C) & Wind Speed ((m/s)10)",
-     type="n")
-points(datW$DD, datW$air.tempQ1, col= "tomato 3", pch=15)
-points(datW$DD, datW$air.tempQ2, col= rgb(95/255,158/255,160/255,.5), pch=15)
-points(datW$DD, ((datW$wind.speed)*10), col= "black", pch=100)
+datW$wind.speedQ1 <- ifelse(datW$wind.speed < 0, NA, datW$wind.speed)
+quantile(datW$wind.speedQ1)
+datW[datW$wind.speedQ1 > .1,]
+datW[datW$wind.speedQ1 > 1,]
+datW$wind.speedQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
+                            ifelse(datW$precipitation > 5, NA, datW$wind.speedQ1))
+plot(datW$DD, datW$wind.speedQ1, xlab = "day of year", ylab = "Wind Speed m/s",
+     type = "n")
+points(datW$DD, datW$wind.speedQ1,
+       col = "blue2", pch=15)
+points(datW$DD, datW$wind.speedQ2,
+       col = "black", pch=100)
 
 
 #question 7 soil temp qa qc
+mean(datW$soil.moisture, trim = 0, na.rm = TRUE) - median(datW$soil.moisture, na.rm = TRUE)
+mean(datW$soil.temp, trim = 0, na.rm = TRUE) - median(datW$soil.temp, na.rm = TRUE)
 
+#question 8
+install.packages("data.table")
+library("data.table")
+data <- data.table("Avg Air Temp" = mean(datW$air.temperature, trim = 0, na.rm = TRUE),
+                   "Avg Wind Speed" = mean(datW$wind.speed, trim = 0, na.rm = TRUE),
+                   "Avg Soil Moisture" = mean(datW$soil.moisture, trim = 0, na.rm = TRUE),
+                   "Avg Soil Temp" = mean(datW$soil.temp, trim = 0, na.rm = TRUE),
+                   "Total Precip" = sum(datW$precipitation, na.rm = TRUE))
+   
+# Question 9 Plots
+plot(datW$DD, datW$soil.moisture,xlab = "day of year", ylab = "Soil Moisture",
+     type = "n")
+points(datW$DD, datW$soil.moisture,
+       col = "blue2", pch=15)
+plot(datW$DD, datW$air.temperature, xlab = "day of year", ylab = "air temperature",
+     type = "n")
+points(datW$DD, datW$air.temperature,
+       col = "blue2", pch=15)
+plot(datW$DD, datW$soil.temp, xlab = "day of year", ylab = "soil temp",
+     type = "n")
+points(datW$DD, datW$soil.temp,
+       col = "blue2", pch=15)
+plot(datW$DD, datW$precipitation, xlab = "day of year", ylab = "Precipitation",
+     type = "n")
+points(datW$DD, datW$precipitation,
+       col = "blue2", pch=15)
 
-
-
+#end of assignment code
