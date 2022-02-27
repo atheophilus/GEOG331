@@ -137,6 +137,7 @@ assert(sum(d) == sum(e), "error: unequal values")
 datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
                           ifelse(datW$precipitation > 5, NA, datW$air.tempQ1))
 
+
 # question 6 
 f <- c(datW$wind.speedQ1)
 g <- c(datW$wind.speedQ2)
@@ -167,7 +168,7 @@ data <- data.table("Avg Air Temp" = mean(datW$air.temperature, trim = 0, na.rm =
                    "Avg Soil Moisture" = mean(datW$soil.moisture, trim = 0, na.rm = TRUE),
                    "Avg Soil Temp" = mean(datW$soil.temp, trim = 0, na.rm = TRUE),
                    "Total Precip" = sum(datW$precipitation, na.rm = TRUE))
-   
+
 # Question 9 Plots
 plot(datW$DD, datW$soil.moisture,xlab = "day of year", ylab = "Soil Moisture",
      type = "n")
@@ -187,3 +188,4 @@ points(datW$DD, datW$precipitation,
        col = "blue2", pch=15)
 
 #end of assignment code
+
