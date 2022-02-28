@@ -1,4 +1,5 @@
 # Activity 3 GEOG331 Alex Theophilus
+# Code for Questions 5-9 begins in line 129
 
 #create a function. The names of the arguments for your function will be in parentheses. Everything in curly brackets will be run each time the function is run.
 assert <- function(statement,err.message){
