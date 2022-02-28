@@ -139,16 +139,20 @@ datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0,
                           ifelse(datW$precipitation > 5, NA, datW$air.tempQ1))
 
 
-# question 6 
-f <- c(datW$wind.speedQ1)
-g <- c(datW$wind.speedQ2)
-assert(sum(f) == sum(g), "error: unequal values")
+# question 6 wind speed filtering
 datW$wind.speedQ1 <- ifelse(datW$wind.speed < 0, NA, datW$wind.speed)
 quantile(datW$wind.speedQ1)
 datW[datW$wind.speedQ1 > .1,]
 datW[datW$wind.speedQ1 > 1,]
 datW$wind.speedQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
                             ifelse(datW$precipitation > 5, NA, datW$wind.speedQ1))
+
+#question 6 assert answer
+f <- c(datW$wind.speedQ1)
+g <- c(datW$wind.speedQ2)
+assert(sum(f) == sum(g), "error: unequal values") 
+
+#question 6 plot
 plot(datW$DD, datW$wind.speedQ1, xlab = "day of year", ylab = "Wind Speed m/s",
      type = "n")
 points(datW$DD, datW$wind.speedQ1,
@@ -189,4 +193,5 @@ points(datW$DD, datW$precipitation,
        col = "blue2", pch=15)
 
 #end of assignment code
+
 
