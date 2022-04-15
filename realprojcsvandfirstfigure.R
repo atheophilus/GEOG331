@@ -16,5 +16,11 @@ GlobalFoodGHG <- c(sum(FoodGHG$Y_1990), sum(FoodGHG$Y_1991), sum(FoodGHG$Y_1992)
                    sum(FoodGHG$Y_2013), sum(FoodGHG$Y_2014), sum(FoodGHG$Y_2015))
 
 plot(GlobalFoodGHG, AmmoniaPollution$Agriculture, xlab = "Total Worldwide GHG Emissions from Food", ylab = "Worldwide Ammonia Pollution from Agriculture")
-lm(GlobalFoodGHG ~ AmmoniaPollution$Agriculture)
-abline(lm(GlobalFoodGHG ~ AmmoniaPollution$Agriculture))
+
+GlobalFoodGHG$TotalGHG <- GlobalFoodGHG
+GlobalFoodGHG$Year <- c(1990:2015)
+GlobalFoodGHG$Ammonia <- AmmoniaPollution$Agriculture
+
+
+ggplot(GlobalFoodGHG, aes(x = TotalGHG, y = Ammonia, color = Year)) +
+  geom_point()
