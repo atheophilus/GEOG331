@@ -1,5 +1,5 @@
 # Alex Theophilus GEOG331
-# April 2022
+# Spring 2022
 
 
 
@@ -32,6 +32,7 @@ legend(15500000, 2e+07, legend = c("Agriculture", "Buildings", "Transportation",
        fill = c("red", "black", "blue", "grey"))
 
 EUAmmonia <- read.csv("T:\\students\\atheophilus\\Data\\Edgar_Food_Data\\EUAmmoniaPoll.csv", skip = 9, header = TRUE)
+# remove commas from values
 EUAmmonia$X1990 <- as.numeric(gsub(",","", EUAmmonia$X1990))
 EUAmmonia$X1991 <- as.numeric(gsub(",","", EUAmmonia$X1991))
 EUAmmonia$X1992 <- as.numeric(gsub(",","", EUAmmonia$X1992))
@@ -53,6 +54,30 @@ EUAmmonia$X2007 <- as.numeric(gsub(",","", EUAmmonia$X2007))
 EUAmmonia$X2008 <- as.numeric(gsub(",","", EUAmmonia$X2008))
 EUAmmonia$X2009 <- as.numeric(gsub(",","", EUAmmonia$X2009))
 EUAmmonia$X2010 <- as.numeric(gsub(",","", EUAmmonia$X2010))
+EUAmmonia$X2011 <- as.numeric(gsub(",","", EUAmmonia$X2011))
+EUAmmonia$X2012 <- as.numeric(gsub(",","", EUAmmonia$X2012))
+EUAmmonia$X2013 <- as.numeric(gsub(",","", EUAmmonia$X2013))
+EUAmmonia$X2014 <- as.numeric(gsub(",","", EUAmmonia$X2014))
+EUAmmonia$X2015 <- as.numeric(gsub(",","", EUAmmonia$X2015))
+EUAmmonia$X2016 <- as.numeric(gsub(",","", EUAmmonia$X2016))
+EUAmmonia$X2017 <- as.numeric(gsub(",","", EUAmmonia$X2017))
+EUAmmonia$X2018 <- as.numeric(gsub(",","", EUAmmonia$X2018))
+EUAmmonia$X2019 <- as.numeric(gsub(",","", EUAmmonia$X2019))
 
+# create dataset of European Union ammonia pollution
+# match time frame to previous data sets
+TOTALEUAmmon <- c(sum(EUAmmonia$X1990, na.rm = TRUE), sum(EUAmmonia$X1991, na.rm = TRUE), sum(EUAmmonia$X1992, na.rm = TRUE), sum(EUAmmonia$X1993, na.rm = TRUE), 
+                    sum(EUAmmonia$X1994, na.rm = TRUE), sum(EUAmmonia$X1995, na.rm = TRUE), sum(EUAmmonia$X1996, na.rm = TRUE), sum(EUAmmonia$X1997, na.rm = TRUE),
+                    sum(EUAmmonia$X1998, na.rm = TRUE), sum(EUAmmonia$X1999, na.rm = TRUE), sum(EUAmmonia$X2000, na.rm = TRUE), sum(EUAmmonia$X2001, na.rm = TRUE),
+                    sum(EUAmmonia$X2002, na.rm = TRUE), sum(EUAmmonia$X2003, na.rm = TRUE), sum(EUAmmonia$X2004, na.rm = TRUE), sum(EUAmmonia$X2005, na.rm = TRUE),
+                    sum(EUAmmonia$X2006, na.rm = TRUE), sum(EUAmmonia$X2007, na.rm = TRUE), sum(EUAmmonia$X2008, na.rm = TRUE), sum(EUAmmonia$X2009, na.rm = TRUE),
+                    sum(EUAmmonia$X2010, na.rm = TRUE), sum(EUAmmonia$X2011, na.rm = TRUE), sum(EUAmmonia$X2012, na.rm = TRUE), sum(EUAmmonia$X2013, na.rm = TRUE),
+                    sum(EUAmmonia$X2014, na.rm = TRUE), sum(EUAmmonia$X2015, na.rm = TRUE))
 
-
+# graph european union ammonia pollution over time
+plot(GlobalFoodGHG$Year, TOTALEUAmmon, main = "Comparing European and Global Ammonia Pollution",
+    xlab = "Year", ylab = "Ammonia Pollution (tonnes)", ylim = c(75000,50000000))
+# plot global ammonia pollution for contrast
+points(GlobalFoodGHG$Year,GlobalFoodGHG$Ammonia, col = "red")
+legend(2000, 2e+07, legend = c("European Union", "Global"),
+       fill = c("Black", "Red"))
