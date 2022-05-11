@@ -1,8 +1,6 @@
 # Alex Theophilus GEOG331
 # Spring 2022
 
-
-
 # reading in ACTUAL project csv files
 FoodGHG <- read.csv("T:\\students\\atheophilus\\Data\\Edgar_Food_Data\\EdgarFoodv6.csv", skip = 3)
 AmmoniaPollution <- read.csv("T:\\students\\atheophilus\\Data\\Edgar_Food_Data\\AmmoniaEdgar.csv")
@@ -15,22 +13,32 @@ GlobalFoodGHG <- c(sum(FoodGHG$Y_1990), sum(FoodGHG$Y_1991), sum(FoodGHG$Y_1992)
                    sum(FoodGHG$Y_2008), sum(FoodGHG$Y_2009), sum(FoodGHG$Y_2010), sum(FoodGHG$Y_2011), sum(FoodGHG$Y_2012),
                    sum(FoodGHG$Y_2013), sum(FoodGHG$Y_2014), sum(FoodGHG$Y_2015))
 
+# plot food system GHG emissions with Ag. Ammon Pollution
 plot(GlobalFoodGHG, AmmoniaPollution$Agriculture, xlab = "Total Worldwide GHG Emissions from Food", ylab = "Worldwide Ammonia Pollution from Agriculture")
 
+# Configure dataset with Global Food System GHGs,
+# Farm-Gate ammonia pollution, and appropriately labeled years
 GlobalFoodGHG$TotalGHG <- GlobalFoodGHG
 GlobalFoodGHG$Year <- c(1990:2015)
 GlobalFoodGHG$Ammonia <- AmmoniaPollution$Agriculture
 
-plot(GlobalFoodGHG$TotalGHG, AmmoniaPollution$Agriculture, 
-     main = "Global Food GHG Emissions with Ammonia Pollution from Y1990-Y2015",
-     xlab = "Total Worldwide GHG Emissions from Food", ylab = "Worldwide Ammonia Pollution",
+# Plot Food System GHGs over time
+plot(GlobalFoodGHG$Year, GlobalFoodGHG$Ammonia, xlab = "Year", ylab = "Ammonia Pollution from Food")
+# plot food production ammonia pollution over time
+plot(GlobalFoodGHG$Year, GlobalFoodGHG$TotalGHG, xlab = "Year", ylab = "World GHG Emmissions from Food")
+
+# Plot Ammonia Pollution Sources' Contributions over time
+plot(GlobalFoodGHG$Year, AmmoniaPollution$Agriculture, 
+     main = "Ammonia Pollution from Y1990-Y2015",
+     xlab = "Year", ylab = "Worldwide Ammonia Pollution",
      ylim = c(75000,50000000), col = "red")
-points(GlobalFoodGHG$TotalGHG, AmmoniaPollution$Transport, col = "blue")
-points(GlobalFoodGHG$TotalGHG, AmmoniaPollution$Waste, col = "grey")
-points(GlobalFoodGHG$TotalGHG, AmmoniaPollution$Buildings, col = "black")
-legend(15500000, 2e+07, legend = c("Agriculture", "Buildings", "Transportation", "Waste"),
+points(GlobalFoodGHG$Year, AmmoniaPollution$Transport, col = "blue")
+points(GlobalFoodGHG$Year, AmmoniaPollution$Waste, col = "grey")
+points(GlobalFoodGHG$Year, AmmoniaPollution$Buildings, col = "black")
+legend(2000, 2e+07, legend = c("Agriculture", "Buildings", "Transportation", "Waste"),
        fill = c("red", "black", "blue", "grey"))
 
+#read in European Union Ammonia Data
 EUAmmonia <- read.csv("T:\\students\\atheophilus\\Data\\Edgar_Food_Data\\EUAmmoniaPoll.csv", skip = 9, header = TRUE)
 # remove commas from values
 EUAmmonia$X1990 <- as.numeric(gsub(",","", EUAmmonia$X1990))
@@ -75,9 +83,25 @@ TOTALEUAmmon <- c(sum(EUAmmonia$X1990, na.rm = TRUE), sum(EUAmmonia$X1991, na.rm
                     sum(EUAmmonia$X2014, na.rm = TRUE), sum(EUAmmonia$X2015, na.rm = TRUE))
 
 # graph european union ammonia pollution over time
-plot(GlobalFoodGHG$Year, TOTALEUAmmon, main = "Comparing European and Global Ammonia Pollution",
-    xlab = "Year", ylab = "Ammonia Pollution (tonnes)", ylim = c(75000,50000000))
+plot(GlobalFoodGHG$Year, TOTALEUAmmon, main = "EU Ammonia Pollution from Food Systems",
+    xlab = "Year", ylab = "Ammonia Pollution (tonnes)")
 # plot global ammonia pollution for contrast
-points(GlobalFoodGHG$Year,GlobalFoodGHG$Ammonia, col = "red")
+plot(GlobalFoodGHG$Year, TOTALEUAmmon, main = "Comparing European and Global Ammonia Pollution",
+     xlab = "Year", ylab = "Ammonia Pollution (tonnes)", ylim = c(75000,50000000))
+points(GlobalFoodGHG$Year,GlobalFoodGHG$Ammonia, col = "red", ylim = c(75000,50000000))
 legend(2000, 2e+07, legend = c("European Union", "Global"),
        fill = c("Black", "Red"))
+
+#build linear regression model for world ammonia poll from food production
+GlobalAmmoniaModel <- lm(Year ~ Ammonia, data = GlobalFoodGHG)
+summary(GlobalAmmoniaModel)
+
+#build linear regression model for world GHG from food systems
+GlobalFoodGHGModel <- lm(Year ~ TotalGHG, data = GlobalFoodGHG) 
+summary(GlobalFoodGHGModel)
+
+#build lin reg model for EU food ammonia pollution
+EUAmmonModel <- lm(GlobalFoodGHG$Year ~ TOTALEUAmmon)
+summary(EUAmmonModel)
+
+# end of project code
